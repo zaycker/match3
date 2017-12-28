@@ -1,6 +1,8 @@
 import Graphics from 'components/Graphics';
 
 export default class Circle extends Graphics {
+  type = 'Circle';
+
   constructor(options = {}) {
     super(options);
 

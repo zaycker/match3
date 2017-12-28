@@ -1,6 +1,8 @@
 import Graphics from 'components/Graphics';
 
 export default class Square extends Graphics {
+  type = 'Square';
+
   constructor(options = {}) {
     super(options);
 

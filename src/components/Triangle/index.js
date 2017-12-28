@@ -1,6 +1,8 @@
 import Graphics from 'components/Graphics';
 
 export default class Triangle extends Graphics {
+  type = 'Triangle';
+
   constructor(options = {}) {
     super(options);
 

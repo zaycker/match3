@@ -4,9 +4,10 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const baseDevConfig = () => ({
   devtool: 'eval-cheap-module-source-map',
-  entry: {
-    app: [path.join(__dirname, '../src/app')],
-  },
+  entry: [
+    require.resolve('./polyfills'),
+    path.join(__dirname, '../src/app'),
+  ],
   output: {
     path: path.join(__dirname, '../dev/js'),
     filename: '[name].bundle.js',
@@ -21,8 +22,22 @@ const baseDevConfig = () => ({
   },
   module: {
     rules: [{
+      exclude: [
+        /\.html$/,
+        /\.js$/,
+        /\.css|\.less$/,
+        /\.json$/,
+        /src\/(js|svg)\/.*\.svg$/,
+      ],
+      loader: 'url-loader',
+      options: {
+        limit: 10000,
+        name: 'static/media/[name].[hash:8].[ext]',
+      },
+    }, {
       test: /\.js$/,
       loader: 'babel-loader',
+      include: [path.join(__dirname, '../src')],
       exclude: /node_modules/,
     }],
   },

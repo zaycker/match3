@@ -3,9 +3,10 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: {
-    app: [path.join(__dirname, '../src/app')],
-  },
+  entry: [
+    require.resolve('./polyfills'),
+    path.join(__dirname, '../src/app'),
+  ],
   output: {
     path: path.join(__dirname, '../build'),
     filename: '[name].bundle.js',
@@ -39,6 +40,19 @@ module.exports = {
   },
   module: {
     rules: [{
+      exclude: [
+        /\.html$/,
+        /\.js$/,
+        /\.css|\.less$/,
+        /\.json$/,
+        /src\/(js|svg)\/.*\.svg$/,
+      ],
+      loader: 'url-loader',
+      options: {
+        limit: 10000,
+        name: 'static/media/[name].[hash:8].[ext]',
+      },
+    }, {
       test: /\.js$/,
       loader: 'babel-loader',
       exclude: /node_modules/,
